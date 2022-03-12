@@ -111,7 +111,7 @@ class _ChatPageState extends State<ChatPage> {
                                 width: 2,
                               ),
                               Text(
-                                "Add New",
+                                "Add",
                                 style: regularTextStyle.copyWith(
                                   fontSize: 14.0,
                                 ),
