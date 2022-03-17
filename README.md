@@ -1,4 +1,4 @@
-# Convi - Chat UI
+# Convi - Chat UI Template
 
 Convi is chat template ui create using flutter.
 
