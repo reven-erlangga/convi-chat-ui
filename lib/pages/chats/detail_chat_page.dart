@@ -11,6 +11,7 @@ class DetailChatPage extends StatefulWidget {
 }
 
 class _DetailChatPageState extends State<DetailChatPage> {
+  TextEditingController _controllerMessage = TextEditingController();
   List<ChatMessage> messages = [
     ChatMessage(messageContent: "Hello, ", messageType: "receiver"),
     ChatMessage(messageContent: "How have you been?", messageType: "receiver"),
@@ -39,18 +40,18 @@ class _DetailChatPageState extends State<DetailChatPage> {
                   ),
                   Padding(
                     padding: const EdgeInsets.symmetric(horizontal: edge / 2),
-                    child: Expanded(
-                      child: Row(
-                        crossAxisAlignment: CrossAxisAlignment.center,
-                        children: [
-                          CircleAvatar(
-                            backgroundImage: NetworkImage(widget.imageUrl),
-                            maxRadius: 20,
-                          ),
-                          SizedBox(
-                            width: size.width / edge,
-                          ),
-                          Column(
+                    child: Row(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        CircleAvatar(
+                          backgroundImage: NetworkImage(widget.imageUrl),
+                          maxRadius: 20,
+                        ),
+                        SizedBox(
+                          width: size.width / edge,
+                        ),
+                        Expanded(
+                          child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: <Widget>[
@@ -69,17 +70,15 @@ class _DetailChatPageState extends State<DetailChatPage> {
                               ),
                             ],
                           ),
-                          Expanded(
-                            child: Align(
-                              alignment: Alignment.centerRight,
-                              child: Icon(
-                                Icons.settings,
-                                color: blackColor.withAlpha(200),
-                              ),
-                            ),
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: Icon(
+                            Icons.settings,
+                            color: blackColor.withAlpha(200),
                           ),
-                        ],
-                      ),
+                        ),
+                      ],
                     ),
                   ),
                   SizedBox(
@@ -93,7 +92,7 @@ class _DetailChatPageState extends State<DetailChatPage> {
             itemCount: messages.length,
             shrinkWrap: true,
             padding: const EdgeInsets.only(top: 10, bottom: 10),
-            physics: const NeverScrollableScrollPhysics(),
+            physics: const BouncingScrollPhysics(),
             itemBuilder: (context, index) {
               return Container(
                 padding: const EdgeInsets.symmetric(
@@ -148,9 +147,10 @@ class _DetailChatPageState extends State<DetailChatPage> {
                   const SizedBox(
                     width: 15,
                   ),
-                  const Expanded(
+                  Flexible(
                     child: TextField(
-                      decoration: InputDecoration(
+                      controller: _controllerMessage,
+                      decoration: const InputDecoration(
                           hintText: "Write message...",
                           hintStyle: TextStyle(color: Colors.black54),
                           border: InputBorder.none),
@@ -160,7 +160,18 @@ class _DetailChatPageState extends State<DetailChatPage> {
                     width: 15,
                   ),
                   FloatingActionButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      if (_controllerMessage.text == '') return;
+
+                      ChatMessage chatMessage = ChatMessage(
+                          messageContent: _controllerMessage.text,
+                          messageType: 'sender');
+
+                      setState(() {
+                        messages.add(chatMessage);
+                        _controllerMessage.text = '';
+                      });
+                    },
                     child: Icon(
                       Icons.send,
                       color: whiteColor,

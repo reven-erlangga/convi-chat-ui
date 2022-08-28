@@ -3,17 +3,20 @@ import 'package:convi/theme/theme.dart';
 import 'package:flutter/material.dart';
 
 class ConversationList extends StatefulWidget {
-  String name;
-  String messageText;
-  String imageUrl;
-  String time;
-  bool isMessageRead;
-  ConversationList(
-      {required this.name,
+  final String name;
+  final String messageText;
+  final String imageUrl;
+  final String time;
+  final bool isMessageRead;
+
+  const ConversationList(
+      {Key? key,
+      required this.name,
       required this.messageText,
       required this.imageUrl,
       required this.time,
-      required this.isMessageRead});
+      required this.isMessageRead})
+      : super(key: key);
   @override
   _ConversationListState createState() => _ConversationListState();
 }
@@ -34,7 +37,7 @@ class _ConversationListState extends State<ConversationList> {
         padding: const EdgeInsets.symmetric(horizontal: edge / 2),
         child: Row(
           children: <Widget>[
-            Expanded(
+            Flexible(
               child: Row(
                 children: <Widget>[
                   CircleAvatar(
@@ -44,18 +47,16 @@ class _ConversationListState extends State<ConversationList> {
                   const SizedBox(
                     width: 16,
                   ),
-                  Expanded(
+                  Flexible(
                     child: Container(
                       color: Colors.transparent,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: <Widget>[
-                          Text(
-                            widget.name,
-                            style: TextStyle(fontSize: 16),
-                          ),
-                          SizedBox(
-                            height: 6,
+                          Text(widget.name,
+                              style: regularTextStyle.copyWith(fontSize: 16.0)),
+                          const SizedBox(
+                            height: 5,
                           ),
                           Text(
                             widget.messageText,

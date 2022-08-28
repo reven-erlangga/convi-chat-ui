@@ -22,9 +22,17 @@ class _HomePageState extends State<HomePage> {
       body: PageView(
         controller: _pageController,
         children: [
-          ChatPage(),
-          Container(color: Colors.red),
-          Container(color: Colors.greenAccent.shade700),
+          const ChatPage(),
+          Center(
+              child: Text(
+            "Channel",
+            style: regularTextStyle,
+          )),
+          Center(
+              child: Text(
+            "My Profile",
+            style: regularTextStyle,
+          )),
         ],
         onPageChanged: (index) {
           // Use a better state management solution

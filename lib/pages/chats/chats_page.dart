@@ -62,6 +62,7 @@ class _ChatPageState extends State<ChatPage> {
             bottom: false,
             child: SingleChildScrollView(
                 primary: true,
+                physics: const BouncingScrollPhysics(),
                 child: ListView(
                   primary: false,
                   shrinkWrap: true,
